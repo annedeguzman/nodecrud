@@ -1,50 +1,35 @@
-var createModel=require('../models/create-model');
+const createModel = require('../models/create-model');
 
-function caesarCipher(key, text) {
-  const shift = key % 26; // Ensure the key is within the alphabet range
-  let output = '';
-
+function caesarCipherEncrypt(text, key) {
+  let result = '';
   for (let i = 0; i < text.length; i++) {
-    let char = text[i];
-
-    // Check if the character is a letter
-    if (char.match(/[a-z]/i)) {
-      // Get its code
-      let code = text.charCodeAt(i);
-
-      // Uppercase letters
-      if ((code >= 65) && (code <= 90)) {
-        char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
-      }
-      // Lowercase letters
-      else if ((code >= 97) && (code <= 122)) {
-        char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
-      }
+    let charCode = text.charCodeAt(i);
+    if (charCode >= 65 && charCode <= 90) {
+      result += String.fromCharCode(((charCode - 65 + key) % 26) + 65);
+    } else if (charCode >= 97 && charCode <= 122) {
+      result += String.fromCharCode(((charCode - 97 + key) % 26) + 97);
+    } else {
+      result += text[i];
     }
-
-    // Append the encrypted character to the output
-    output += char;
   }
-
-  return output;
+  return result;
 }
 
-module.exports={
-crudForm:function(req, res) {
+module.exports = {
+  crudForm: function(req, res) {
     res.render('crud-form');
-},
+  },
+  createData: function(req, res) {
+    const inputData = {
+      full_name: caesarCipherEncrypt(req.body.full_name, 21),
+      email_address: caesarCipherEncrypt(req.body.email_address, 21),
+      city: caesarCipherEncrypt(req.body.city, 21),
+      country: caesarCipherEncrypt(req.body.country, 21)
+    };
 
-createData:function(req,res){
-  const inputData= {
-    full_name:     caesarCipher(9, req.body.full_name,),
-    email_address: req.body.email_address,
-    city :         req.body.city,
-    country :      req.body.country
-  };
-createModel.createData(inputData,function(data){
-      res.redirect('/crud/form');
+    createModel.createData(inputData, function(data) {
       console.log(data.affectedRows + " record created");
+      res.redirect('/crud/read'); // Redirect to the page where data is viewed
     });
-}
-
-}
+  }
+};
