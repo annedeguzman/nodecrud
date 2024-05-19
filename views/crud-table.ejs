@@ -4,14 +4,58 @@
   <title></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<style>
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://indieground.net/wp-content/uploads/2023/03/Freebie-GradientTextures-Preview-02.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Poppins' }
+
+    nav {
+      width: 100%;
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .nav-title {
+      font-size: 24px;
+      margin-left: 100px;
+    }
+  
+    .nav-links {
+      font-size: 18px;
+      margin-right: 100px;
+    }
+  
+    nav a {
+      text-decoration: none;  /* Removes underline */
+      font-family: inherit;  /* Ensures links use the default font */
+      color: white; /* Explicitly set the color again if needed */
+      padding: 0 10px;
+    }
+  
 table, td, th {  
  border: 1px solid #ddd;
  text-align: left;
 }
 table{
+margin-top: 100px;
  border-collapse: collapse;
  width: 50%;
+ background-color: aliceblue;
 }
 .table-data{
   overflow-x:auto;
@@ -19,9 +63,19 @@ table{
 th, td {
   padding: 15px;
 }
+
  </style>
 </head>
 <body>
+
+  <nav>
+    <div class="nav-title">Final Project</div>
+    <div class="nav-links">
+      <a href="/crud/form" style="color: white; padding: 0 10px;">Create Data</a>
+      <a href="/crud/read" style="color: white; padding: 0 10px;">View Data</a>
+    </div>
+  </nav>
+  
     <div class="table-data">
     <table border="1" >
         <tr>
@@ -45,8 +99,8 @@ th, td {
             <td><%=data.email_address %></td>
             <td><%=data.city %></td>
             <td><%=data.country %></td>
-            <td><a href="/crud/edit/<%=data.id%>">Edit</a></td>
-            <td><a href="/crud/delete/<%=data.id%>">Delete</a></td>
+            <td><a class="btn btn-outline-warning" href="/crud/edit/<%=data.id%>">Edit</a></td>
+            <td><a class="btn btn-outline-danger" href="/crud/delete/<%=data.id%>">Delete</a></td>
         </tr>
         <%  i++; }) %>
         <% } else{ %>
